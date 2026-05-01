@@ -2,11 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Unit Tests frontent') {
+            agent {
+                docker {
+                    image 'node:1420-alpine'
+                    reuseNode true
+                }
+            }
             steps {
-                echo 'Hello World'
-                sh 'echo "Hello Jenkins"'
-                sh 'date'
+                dir('bugtracker-frontent') {
+                    sh '''
+                      npm ci
+                      npm test
+                    '''
+                }
+            }
+            post {
+                always {
+                    junit 'bugtracker-frontent/test-results.xml'
+                }
             }
         }
     }
