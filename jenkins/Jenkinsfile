@@ -14,8 +14,13 @@ pipeline {
                     sh 'go test -v ./...'
                 }
             }
+            environment {
+                HOME = "${WORKSPACE}"
+                GOCACHE = "${WORKSPACE}/.cache/go-build"
+                GOPATH = "${WORKSPACE}/.go"
+            }
         }
-        stage('Unit Tests frontent') {
+        stage('Unit Tests frontend') {
             agent {
                 docker {
                     image 'node:20-alpine'
@@ -23,7 +28,7 @@ pipeline {
                 }
             }
             steps {
-                dir('bugtracker-frontent') {
+                dir('bugtracker-frontend') {
                     sh '''
                       npm ci
                       npm test
@@ -32,7 +37,7 @@ pipeline {
             }
             post {
                 always {
-                    junit 'bugtracker-frontent/test-results.xml'
+                    junit 'bugtracker-frontend/test-results.xml'
                 }
             }
         }
