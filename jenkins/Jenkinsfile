@@ -11,13 +11,18 @@ pipeline {
             }
             steps {
                 dir('bugtracker-backend') {
-                    sh 'go test -v ./...'
+                    sh 'go test -v ./... 2<&1 | go-junit-report > report.xml'
                 }
             }
             environment {
                 HOME = "${WORKSPACE}"
                 GOCACHE = "${WORKSPACE}/.cache/go-build"
                 GOPATH = "${WORKSPACE}/.go"
+            }
+            post {
+                always {
+                    junit 'bugtracker-backend/test-results.xml'
+                }
             }
         }
         stage('Unit Tests frontend') {
