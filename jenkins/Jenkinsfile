@@ -83,7 +83,7 @@ pipeline {
                 sh 'docker compose up --build -d'
             }
         }
-        stage(api tests){
+        stage('api tests'){
             agent{
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.50.0-jammy'
