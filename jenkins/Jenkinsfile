@@ -132,12 +132,12 @@ pipeline {
                         reportFiles: 'index.html'
                     ]
                 }
+            }
         }
     }
     post {
         always {
             cleanWs()
         }
-    }
-    
+    }   
 }
