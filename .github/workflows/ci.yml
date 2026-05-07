@@ -40,3 +40,10 @@ jobs:
         run: |
           npm ci
           npm test
+      
+      - name: Publish frontend test results
+        if: always()
+        with:
+          name: frontend-test-unit-results
+          path: bugtracker-frontend/test-results.xml
+          reporter: jest-junit
