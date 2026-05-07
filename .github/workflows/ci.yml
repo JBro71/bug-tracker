@@ -42,6 +42,7 @@ jobs:
           npm test
       
       - name: Publish frontend test results
+        uses: dorny/test-reporter@v1
         if: always()
         with:
           name: frontend-test-unit-results
