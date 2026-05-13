@@ -18,7 +18,7 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      coverage: ${{ steps.test-backend.outputs.report }}
+      coverage: ${{ steps.test-backend.outputs.report}}
     steps:
       - uses: actions/checkout@v4
 
@@ -45,6 +45,8 @@ jobs:
 
           echo "report<<EOF" >> $GITHUB_OUTPUT
           cat coverage.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
 
           go test -v ./... 2>&1 | go-junit-report > test-results.xml
 
@@ -100,5 +102,5 @@ jobs:
           body: |
             ## Backend Test coverage report
             ```
-            $(needs.unit-tests-backend.outputs.coverage)
+            ${{needs.unit-tests-backend.outputs.coverage }}
             ```
